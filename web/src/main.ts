@@ -6,7 +6,13 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app: any = await NestFactory.create(AppModule);
+
+  app.set('view engine', 'ejs');
+
+
+
+
   app.use(express.static('publico')); // Servidor Web Estatico
   app.use(cookieParser('Me agradan los poliperros')); // Secreto Cookies
   app.use(// Session
@@ -19,189 +25,187 @@ async function bootstrap() {
       store: new FileStore(),
     }),
   );
-
   await app.listen(3000); // PUERTO
   // package.json
   // npm run start
 }
+
 bootstrap();
+
 /*
 abstract class Nombre {
-  public nombrePropiedad?: string; // undefined
-  private apellidoPropiedad: string = 'Eguez';
-  protected edad = 1;
-  static comun: number =10;
-  propiedadPublica: String;
-  constructor(
-    propiedadPublicaParametro: string, //parametro
-    public propiedadRapido: string, //trasforma una propiedad
-  ) {
-    this.propiedadPublica = propiedadPublicaParametro;
-    this.propiedadRapido;
-  }
-
-
-
+    public nombrePropiedad?: string; // undefined
+    private apellidoPropiedad: string = 'Eguez';
+    protected edad = 1; // number (Duck Typing)
+    static comun: number = 10;
+    propiedadPublica: string;
+    constructor(
+        propiedadPublicaParametro: string, // parametro
+        public propiedadRapido: string, // transforma una propiedad
+    ) {
+        this.propiedadPublica = propiedadPublicaParametro;
+        this.propiedadRapido;
+    }
+    public funcionPublica(parametroString: string): void {
+        // no hay return = undefined
+    }
+    private funcionPrivada(parametroString: string, // ? = puede ser undefined
+                           parametroNumber?: number)  { // omitir :void (defecto)
+        // no hay return = undefined
+    }
+    protected funcionPublica(): number {
+        return 1;
+    }
+    static funcionEstatica(): string {
+        return 'string';
+    }
 }
-
-//VARIABLES PRIMITIVAS
-//TIPOS DE VARIABLES
-
-//MUTABLES -> asignar
-var variableUno = 1;
+// package.json
+// npm run start
+// nodejs command prompt
+/// VARIABLES
+// TIPOS DE VARIABLES
+// MUTABLES ( reasignar -> = )
+var variableUno = 1; // NO USAMOS VAR !
 let variableDos = 2;
 variableUno = 3;
 variableDos = 4;
-
-//INMUTABLES -> no se pueden asignar
-const variabletres = 5;
-
-//variabletras = 2 -> ERROR
-
-//PRIMITIVAS PRIMITIVAS
-const texto: string = '';
+// INMUTABLES ( No se pueden reasignar X -> != )
+const variableTres = 5;
+// variableTres = 2; // ERROR!
+// PRIMITIVAS PRIMITIVAS (Typescript)
+const texto: string = ''; // "" ``
 const numeroEntero: number = 1;
-const foltante: number = 1.2;
-const soyEstudiante: boolean = true;
+const numeroFlotante: number = 1.2;
+const soyEstudiante: boolean = true; // false
 const noDefinido = undefined;
-const nada = null;
+const noHayNada = null;
 const fecha: Date = new Date();
-//Duck Typing
-const textoDos = 'Jeremy';
-let cualquiera: any = 'Jeremy';
+// Duck Typing
+const textoDos = 'Adrian';
+let cualquierCosa: any = 'Vicente';
 cualquierCosa = 1;
 cualquierCosa = true;
 cualquierCosa = new Date();
-
 class Usuario {
-
-  constructor(
-    public nombre: string,
-    public apellido: string
-  ){
-
-  }
+    constructor(
+        public nombre: string,
+        public apellido: string
+    ) {
+    }
 }
-
-const unsuario: Usuario = new Usuario(nombre:'Jeremy', apellido: 'Alvarez');
+const usuario: Usuario = new Usuario('Adrian', 'Eguez');
 usuario.nombre;
 usuario.apellido;
-
 interface UsuarioInterface {
-  nombre:string;
-  apellido:string;
-  edad?: number; //? => Opcional // valor por defecto -> undefined
+    nombre: string;
+    apellido: string;
+    edad?: number; // ? => Opcional // Valor por defecto es undefined
 }
-
 let objetoUsuario: UsuarioInterface = {
-  nombre: 'Jeremy';
+    nombre: 'Adrian',
+    apellido: 'Eguez',
 };
-
-objetoUusario.nombre;
+objetoUsuario.nombre;
+objetoUsuario.apellido;
+objetoUsuario.edad;
 console.log(usuario);
-
+console.log(objetoUsuario);
+// PUNTEROS REFERENCIAS
+// PRIMITIVAS
 let edadAntigua = 22;
-let otraEdad = edadAntigua;
-edadAntigua += 1;
-otraEdad -= 1;
-
+let otraEdad = edadAntigua; // VALOR
+edadAntigua += 1; // 23
+otraEdad -= 1; // 21
+// Objeto
 let objetoEdad = {
-  edad:22,
+    edad: 22,
 };
-
-let otraEdadOnjeto = objetoEdad;
-otraEdadObjeto.edad = otraEdadObjeto.edad +1; //23
+let otraEdadObjeto = objetoEdad; // REFERENCIA
+otraEdadObjeto.edad = otraEdadObjeto.edad + 1; // 23
 console.log(otraEdadObjeto.edad);
-objetoEdad.edad; //23
-objetoEdad.edad = objetoEdad.edad + 1; //24
-otraEdadObjeto.edad; //24
-let otraEdadObjetoClonado = {...objetoEdad}; //clonacion
-const arregloEjemplo = [1,2,3];
-let arregloClonado = [...arregloEjemplo];
-
-//Arreglos
-const arreglo = [1, '', true, null, new Date()];
-const numeros: number[] = [1,2,3,4,5];
-
-function funcionConNombre(){}
-
-const indice = numeros.findIndex(
-  (numero: number) => {//funcion anonima
-    const igualAtres: boolean = numero === 3;
-    return igualAtres
-  },
-);
-
-numeros[indice] =6
-//agragr al final
-numeros.push(6)
-//agregar al principio
-numeros.unshift(0);
-
-//condiciones -> truty y Falsy
-if(0){
+objetoEdad.edad; // 23
+console.log(otraEdadObjeto.edad);
+objetoEdad.edad = objetoEdad.edad + 1; // 24
+otraEdadObjeto.edad; // 24
+let otraEdadObjetoClonado = {...objetoEdad}; // Clonación Objetos
+const arregloEjemplo = [1, 2, 3]
+let arregloClonado = [...arregloEjemplo]; // Clonación Arreglos
+// Arreglos
+const arregloTodo = [1, '', true, null, new Date()];
+const arregloNumeros: number[] = [1, 2, 3, 4, 5];
+function funcionConNombre() {
+}
+const indice = arregloNumeros
+    .findIndex(
+        (numero) => { // Funcion Anonima xq no tiene nombre
+            const elValorEsIgualAtres: boolean = numero === 3;
+            return elValorEsIgualAtres  // Condicion -> boolean
+        },
+        // function () { -> Funcion Anonima xq no tiene nombre
+        //
+        // }
+    );
+arregloNumeros[indice] = 6
+// agregar al final
+arregloNumeros.push(6)
+// agregar al principio
+arregloNumeros.unshift(0)
+// CONDICIONES -> Truty y Falsy
+const numeroOrden = 0;
+if (numeroOrden) {
   console.log('Truty');
-}else{
+} else {
+  console.log('Falsy'); // FALSY
+}
+if (1) {
+  console.log('Truty'); // TRUTY
+} else {
   console.log('Falsy');
 }
-
-if(1){
-  console.log('Truty');
-}else{
-  console.log('Falsy');
+if (-1) {
+    console.log('Truty'); // TRUTY
+} else {
+    console.log('Falsy');
 }
-
-if(-1){
-  console.log('Truty');
-}else{
-  console.log('Falsy');
+if ("") {
+    console.log('Truty');
+} else {
+    console.log('Falsy'); // FALSY
 }
-
-if(""){
-  console.log('Truty');//Falsy
-}else{
-  console.log('Falsy');
+if ("a") {
+    console.log('Truty'); // TRUTY
+} else {
+    console.log('Falsy');
 }
-
-if("a"){
-  console.log('Truty');
-}else{
-  console.log('Falsy');
+if ({}) {
+    console.log('Truty');
+} else {
+    console.log('Falsy'); // FALSY
 }
-
-if({}){
-  console.log('Truty');//Falsy
-}else{
-  console.log('Falsy');
+if ({a:1}) {
+    console.log('Truty'); // TRUTY
+} else {
+    console.log('Falsy');
 }
-
-if({a:1}){
-  console.log('Truty');
-}else{
-  console.log('Falsy');
+if ([]) {
+    console.log('Truty');
+} else {
+    console.log('Falsy'); // FALSY
 }
-
-if([]){
-  console.log('Truty');//Falsy
-}else{
-  console.log('Falsy');
+if ([1]) {
+    console.log('Truty');// TRUTY
+} else {
+    console.log('Falsy');
 }
-
-if([1]){
-  console.log('Truty');
-}else{
-  console.log('Falsy');
+if (null) {
+    console.log('Truty');
+} else {
+    console.log('Falsy'); // FALSY
 }
-
-if(null){
-  console.log('Truty');
-}else{
-  console.log('Falsy');
-}
-
-if(undefined){
-  console.log('Truty');
-}else{
-  console.log('Falsy');
+if (undefined) {
+    console.log('Truty');
+} else {
+    console.log('Falsy'); // FALSY
 }
 */
