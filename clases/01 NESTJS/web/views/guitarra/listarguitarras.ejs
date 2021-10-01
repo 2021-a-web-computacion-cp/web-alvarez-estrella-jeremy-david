@@ -1,0 +1,88 @@
+
+<%- include('../comunes/cabecera') %>
+
+<div class='container'>
+
+    <!--  !== ! = =      -->
+    <% const existeMensaje = typeof datos.mensaje !== 'undefined'%>
+    <% if(existeMensaje){%>
+        <div class="alert alert-danger" role="alert">
+            <%= datos.mensaje%>
+        </div>
+    <%}%>
+
+    <h1>Lista de Guitarras</h1>
+    <form action='/guitarra/lista-guitarras' method='get'>
+        <div class="mb-3">
+            <label for="busqueda" class="form-label">
+                Busqueda
+            </label>
+            <!-- Viajar como parametro de consulta con el name (en este caso busqueda)    -->
+            <input placeholder="Ej: Nombre de guitarra"
+                   type="text"
+                   name="busqueda"
+                   class="form-control"
+                   id="busqueda"
+                   aria-describedby="ayudaBusqueda">
+            <div id="ayudaBusqueda" class="form-text">
+                Puede buscar por nombre de guitarra.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Buscar</button>
+    </form>
+    <div>
+        <a href='/guitarra/crear-guitarra'>
+            <button class='btn btn-success'>
+                Crear nueva guitarra
+            </button>
+        </a>
+    </div>
+    <table class="table text-center">
+        <thead>
+        <tr>
+            <th scope="col">id Guitarra</th>
+            <th scope="col">Nombre de guitarra</th>
+            <th scope="col">Fecha de Llegada</th>
+            <th scope="col">Tipo de Puente</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Eliminar</th>
+            <th scope="col">Actualizar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% datos.guitarras.forEach( (objeto) => { %>
+            <tr>
+                <th><%= objeto.id %></th>
+                <th><%= objeto.nombre %></th>
+                <th><%=(objeto.fechaLlegada.getDate()+1)+ "/" + (objeto.fechaLlegada.getMonth()+1) + "/" + objeto.fechaLlegada.getFullYear()%></th>
+                <th>
+                    <%if(objeto.puenteFlotante){%>
+                        Flotante
+                    <%}else {%>
+                        Fijo
+                    <%}%>
+                </th>
+                <th><%= objeto.precio %></th>
+                <th>
+                    <form   action='/guitarra/eliminar-guitarra/<%=objeto.id%>'
+                            method='post'>
+                        <button class='btn btn-danger'>Eliminar</button>
+                    </form>
+                </th>
+                <th>
+                    <form   action='/guitarra/actualizar-guitarra/<%=objeto.id%>'
+                            method='post'>
+                        <button class='btn btn-danger'>Actualizar</button>
+                    </form>
+                </th>
+            </tr>
+        <% } ) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../comunes/footer') %>
+
+
+
+

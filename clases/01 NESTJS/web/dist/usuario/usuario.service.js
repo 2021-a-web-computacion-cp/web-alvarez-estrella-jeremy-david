@@ -33,7 +33,6 @@ let UsuarioService = class UsuarioService {
         });
     }
     buscarUno(id) {
-        console.log(id);
         return this.prisma.ePN_USUARIO.findUnique({
             where: {
                 id: id,

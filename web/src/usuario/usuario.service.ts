@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Prisma } from '@prisma/client';
+import { log } from 'util';
 
 @Injectable()
 export class UsuarioService {
@@ -32,9 +33,11 @@ export class UsuarioService {
   }
 
   buscarUno(id: number) {
+    console.log(id);
     return this.prisma.ePN_USUARIO.findUnique({
       where: {
-        id: id,
+
+        id:id,
       },
     });
   }

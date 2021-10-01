@@ -7,7 +7,7 @@
 <%}%>
 <div class='container'>
    <h1>Lista</h1>
-    <form action='/usuario/lista-usuarios' method='get'>
+    <form action='/usuario/lista-usuario' method='get'>
         <div>
             <a href='/usuario/vista-crear'>
                 <button class='btn btn-success'>
@@ -47,7 +47,7 @@
             <th><%objeto.nombre%>></th>
             <th><%objeto.apellido%>></th>
             <th>
-                <form action='/usuaro/eliminar-usuario/<%=objeto.id%>'
+                <form action='/usuario/eliminar-usuario/<%=objeto.id%>'
                       method='post'>
                 <button class='btn btn-danger'>Eliminar</button>
                 </form>

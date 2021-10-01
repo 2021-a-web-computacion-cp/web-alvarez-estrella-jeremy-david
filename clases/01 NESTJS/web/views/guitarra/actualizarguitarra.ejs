@@ -1,0 +1,62 @@
+<%- include('../comunes/cabecera') %>
+<div class="container">
+    <h1>Actualizar Guitarra</h1>
+
+    <form action="/guitarra/actualizar-guitarra-form/<%=datos.guitarras.id%>" method="post">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">
+                Nombre de Guitarra*
+            </label>
+            <input placeholder="Ej: Ibanez"
+                   type="text"
+                   name="nombre"
+                   class="form-control"
+                   id="nombre"
+                   value='<%=datos.guitarras.nombre%>'
+                   aria-describedby="ayudaNombre">
+            <div id="ayudaNombre" class="form-text">
+
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="fechaLlegada" class="form-label"> Fecha de Llegada </label>
+            <input placeholder="Ej: 2021-02-09"
+                   type="date"
+                   name="fechaLlegada"
+                   class="form-control"
+                   id="fechaLlegada"
+                   value='<%=datos.guitarras.fechaLlegada%>'
+                   aria-describedby="ayudafechaLlegada">
+            <div id="ayudafechaLlegada" class="form-text"> Ingrese la fecha de llegada. </div>
+        </div>
+
+        <div class="mb-3">
+            <label>
+                <input type="checkbox" id="puenteFlotante" name="puenteFlotante"
+                <%if(datos.guitarras.puenteFlotante){%>
+                    checked='checked'
+                <%}%>> Tipo de Puente
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label for="precio" class="form-label">
+                Precio*
+            </label>
+            <input
+                    type="text"
+                    name="precio"
+                    class="form-control"
+                    id="precio"
+                    value='<%=datos.guitarras.precio%>'
+                    aria-describedby="precioNombre">
+            <div id="precio" class="form-text">
+
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Actualizar</button>
+    </form>
+</div>
+<%- include('../comunes/footer') %>

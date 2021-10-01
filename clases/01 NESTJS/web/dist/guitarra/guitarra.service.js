@@ -9,10 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsuarioService = void 0;
+exports.GuitarraService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma.service");
-let UsuarioService = class UsuarioService {
+let GuitarraService = class GuitarraService {
     constructor(prisma) {
         this.prisma = prisma;
     }
@@ -21,32 +21,30 @@ let UsuarioService = class UsuarioService {
             ? {
                 OR: [
                     { nombre: { contains: parametrosBusqueda.busqueda } },
-                    { apellido: { contains: parametrosBusqueda.busqueda } },
                 ],
             }
             : {};
         console.log(or);
-        return this.prisma.ePN_USUARIO.findMany({
+        return this.prisma.guitarra.findMany({
             where: or,
             take: Number(parametrosBusqueda.take) || undefined,
             skip: Number(parametrosBusqueda.skip) || undefined,
         });
     }
     buscarUno(id) {
-        console.log(id);
-        return this.prisma.ePN_USUARIO.findUnique({
+        return this.prisma.guitarra.findUnique({
             where: {
                 id: id,
             },
         });
     }
-    crearUno(usuario) {
-        return this.prisma.ePN_USUARIO.create({
-            data: usuario,
+    crearUno(guitarra) {
+        return this.prisma.guitarra.create({
+            data: guitarra,
         });
     }
     actualizarUno(parametrosActualizar) {
-        return this.prisma.ePN_USUARIO.update({
+        return this.prisma.guitarra.update({
             data: parametrosActualizar.data,
             where: {
                 id: parametrosActualizar.id,
@@ -54,14 +52,14 @@ let UsuarioService = class UsuarioService {
         });
     }
     eliminarUno(id) {
-        return this.prisma.ePN_USUARIO.delete({
+        return this.prisma.guitarra.delete({
             where: { id: id },
         });
     }
 };
-UsuarioService = __decorate([
+GuitarraService = __decorate([
     common_1.Injectable(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
-], UsuarioService);
-exports.UsuarioService = UsuarioService;
-//# sourceMappingURL=usuario.service.js.map
+], GuitarraService);
+exports.GuitarraService = GuitarraService;
+//# sourceMappingURL=guitarra.service.js.map

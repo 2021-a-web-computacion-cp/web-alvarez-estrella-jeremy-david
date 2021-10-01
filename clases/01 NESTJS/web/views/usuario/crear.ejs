@@ -1,0 +1,48 @@
+
+
+<%- include('../comunes/cabecera') %>
+
+
+
+
+    <div class='container'>
+        <!--  !== ! = =      -->
+        <% const existeMensaje = typeof datos.mensaje !== 'undefined'%>
+        <% if(existeMensaje){%>
+            <div class="alert alert-success" role="alert">
+                <%= datos.mensaje%>
+            </div>
+        <%}%>
+
+        <h1>Crear usuario</h1>
+        <form action='/guitarra/crear-guitarra-form' method='post'>
+            <div class="mb-3">
+                <label for="nombre" class="form-label">
+                    Nombre*
+                </label>
+                <input placeholder="Ej: Ibanez"
+                       type="text"
+                       name="nombre"
+                       class="form-control"
+                       id="nombre"
+                       aria-describedby="ayudaNombre">
+                <div id="ayudaNombre" class="form-text">
+                    Nombre de Guitarra:
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="fechaLlegada" class="form-label">
+                    Fecha*
+                </label>
+                <input type='date'>
+                <div id="fecha" class="form-date">
+                    Fecha:
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Crear</button>
+        </form>
+    </div>
+
+
+
+<%- include('../comunes/footer') %>
